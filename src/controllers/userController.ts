@@ -37,7 +37,7 @@ class UserController {
           email: user.email,
           role: user.role,
           last_seen: user.last_seen,
-          id: user._id
+          _id: user._id
         }
       })
     });
