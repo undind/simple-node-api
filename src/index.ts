@@ -1,18 +1,18 @@
-import mongoose from 'mongoose';
 import express from 'express';
 import bodyParser from 'body-parser';
+import { check } from 'express-validator';
 
-import User from './schemas/User';
+import UserController from './controllers/userController';
 
 const app = express();
 const port = 4000;
 
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://localhost:27017/blog', { useNewUrlParser: true, useUnifiedTopology: true });
+import './core/db';
 
-app.get('/', (req: any, res: any) => {
-  res.send('Hello World!');
-});
+const UserCtrl = new UserController();
+
+app.get('/api/login', UserCtrl.login);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
