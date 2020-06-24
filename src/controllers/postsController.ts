@@ -12,7 +12,7 @@ class PostsController {
     const newPost = new PostsModel(postData);
 
     if (!postData.title || !postData.description) {
-      return res.json({
+      return res.status(400).json({
         status: 'error',
         message: 'Заполните сообщение или заголовок!'
       })
@@ -20,9 +20,35 @@ class PostsController {
 
     try {
       await newPost.save();
-      res.json(newPost)
     } catch (error) {
-      res.json({
+      res.status(400).json({
+        status: 'error',
+        error
+      })
+    }
+  }
+
+  delete = async (req: express.Request, res: express.Response) => {
+    const id: string = req.params.id;
+
+    try {
+      await PostsModel.findOneAndRemove({ _id: id }, (error, post) => {
+        if (error) return res.status(400).json({
+          status: 'error',
+          error
+        });
+
+        if (!post) return res.status(404).json({
+          status: 'error',
+          error: 'Такого поста не существует!'
+        });
+
+        return res.status(200).json({
+          status: 'success',
+        });
+      })
+    } catch (error) {
+      res.status(500).json({
         status: 'error',
         error
       })
@@ -33,7 +59,7 @@ class PostsController {
     try {
       await PostsModel.find({}, (err, posts: IPosts) => {
         if (err) {
-          return res.json({
+          return res.status(400).json({
             status: 'error',
             err
           })
@@ -45,7 +71,7 @@ class PostsController {
         })
       })
     } catch (error) {
-      return res.json({
+      return res.status(400).json({
         status: 'error',
         error
       })

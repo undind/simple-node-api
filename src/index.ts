@@ -19,6 +19,7 @@ const PostsCtrl = new PostsController();
 app.get('/api/login', UserCtrl.login);
 
 app.post('/api/post/create', PostsCtrl.create);
+app.delete('/api/post/delete/:id', PostsCtrl.delete);
 app.get('/api/posts/get', PostsCtrl.index);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
