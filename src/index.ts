@@ -20,6 +20,7 @@ app.get('/api/login', UserCtrl.login);
 
 app.post('/api/post/create', PostsCtrl.create);
 app.delete('/api/post/delete/:id', PostsCtrl.delete);
+app.post('/api/post/update/:id', PostsCtrl.update);
 app.post('/api/post/update-claps/:id', PostsCtrl.updateClaps);
 app.get('/api/posts/get', PostsCtrl.index);
 

@@ -58,6 +58,42 @@ class PostsController {
     }
   }
 
+  update = async (req: express.Request, res: express.Response) => {
+    const id: string = req.params.id;
+    const postData = {
+      title: req.body.title,
+      description: req.body.description
+    }
+
+    try {
+      await PostsModel.findOneAndUpdate({ _id: id }, { title: postData.title, description: postData.description }, {
+        new: true,
+        upsert: true
+      }, (err, post) => {
+        if (err) {
+          return res.status(400).json({
+            status: 'error',
+            message: err
+          })
+        }
+
+        if (!post) return res.status(404).json({
+          status: 'error',
+          error: 'Такого поста не существует!'
+        });
+
+        return res.status(200).json({
+          status: 'success',
+        });
+      })
+    } catch (error) {
+      res.status(500).json({
+        status: 'error',
+        error
+      })
+    }
+  }
+
   updateClaps = async (req: express.Request, res: express.Response) => {
     const id: string = req.params.id;
 
