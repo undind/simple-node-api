@@ -19,7 +19,10 @@ class PostsController {
     }
 
     try {
-      await newPost.save();
+      await newPost.save()
+      return res.status(200).json({
+        status: 'success',
+      });
     } catch (error) {
       res.status(400).json({
         status: 'error',
@@ -37,6 +40,35 @@ class PostsController {
           status: 'error',
           error
         });
+
+        if (!post) return res.status(404).json({
+          status: 'error',
+          error: 'Такого поста не существует!'
+        });
+
+        return res.status(200).json({
+          status: 'success',
+        });
+      })
+    } catch (error) {
+      res.status(500).json({
+        status: 'error',
+        error
+      })
+    }
+  }
+
+  updateClaps = async (req: express.Request, res: express.Response) => {
+    const id: string = req.params.id;
+
+    try {
+      await PostsModel.findOneAndUpdate({ _id: id }, { $inc: { 'claps': 0.5 } }, { new: true }, (err, post) => {
+        if (err) {
+          return res.status(400).json({
+            status: 'error',
+            message: err
+          })
+        }
 
         if (!post) return res.status(404).json({
           status: 'error',
