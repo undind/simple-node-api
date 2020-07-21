@@ -18,10 +18,15 @@ const PostsCtrl = new PostsController();
 
 app.get('/api/login', UserCtrl.login);
 
+//Posts
 app.post('/api/post/create', PostsCtrl.create);
 app.delete('/api/post/delete/:id', PostsCtrl.delete);
 app.post('/api/post/update/:id', PostsCtrl.update);
 app.post('/api/post/update-claps/:id', PostsCtrl.updateClaps);
 app.get('/api/posts/get', PostsCtrl.index);
+
+//Users
+app.get('/api/signin', UserCtrl.login);
+app.post('/api/signup', UserCtrl.registration);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
