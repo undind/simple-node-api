@@ -26,7 +26,7 @@ app.post('/api/post/update-claps/:id', PostsCtrl.updateClaps);
 app.get('/api/posts/get', PostsCtrl.index);
 
 //Users
-app.get('/api/signin', UserCtrl.login);
+app.post('/api/signin', UserCtrl.login);
 app.post('/api/signup', UserCtrl.registration);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

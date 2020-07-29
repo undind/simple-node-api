@@ -23,7 +23,7 @@ class UserController {
                     message: 'Не верный пароль или email',
                 });
             }
-
+            
             if (err || !user) {
                 return res.status(404).json({
                     status: 'error',
